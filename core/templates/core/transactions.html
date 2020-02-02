@@ -25,7 +25,7 @@
     			<th scope="col"> Quantity</th>
     			<th scope="col"> Stock code</th>
     			<th scope="col"> Price</th>
-    			<th scope="col"> Gain/loss</th>
+    			<!-- <th scope="col"> Gain/loss</th> -->
     		</tr>
     	</thead>
     	<tbody>
@@ -42,13 +42,13 @@
 	            <td>{{ log.quantity }}</td>
 	            <td>{{ log.stock.code }}</td>
 	            <td><strong>$</strong>{{ log.price }}</td>
-	            <td>
+	            <!-- <td>
 	            	{% if log.change >= 0 %}
 	          	      <font class="text-success">${{ log.change }}</font>
 	                {% elif log.change < 0 %}
 	                  <font class="text-danger">${{ log.change|mul:-1 }}</font>
 	                {% endif %}
-	            </td>
+	            </td> -->
 		</tr>
 		{% endfor %}
     	</tbody>
