@@ -21,7 +21,7 @@ if not settings.EVENT_STARTED:
 
         # Leaderboard api
         url(
-            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+            r'^api/scoreboard/$', views.leaderboardApi, name='leaderboard_api'
         ),
 
         # Logout url
