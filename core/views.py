@@ -35,7 +35,7 @@ def index(request):
 
         return render(request, 'core/leaderboard.html', context)
 
-    if settings.EVENT_STARTED and request.user.is_authenticated:
+    if request.user.is_authenticated:
         playerObj = Player.objects.get(user=request.user)
         playerStocks = PlayerStock.objects.filter(player=playerObj)
 

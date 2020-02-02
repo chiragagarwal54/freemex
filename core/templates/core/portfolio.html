@@ -4,7 +4,11 @@
 {% load mathfilters %}
 
 {% block content %}
-{% include "core/includes/navbar.html" with current="Home" %}
+{% if settings.EVENT_STARTED %}
+  {% include "core/includes/navbar.html" with current="Home" %}
+{% else %}
+  {% include "core/includes/navbarbeforestart.html" %}
+{% endif %}
 
 <!--Main layout-->
 <div class="container portfolio">
@@ -44,6 +48,7 @@
             </div>
         </div>
     </div>
+    {% if settings.EVENT_STARTED %}
     <h1>Portfolio</h1>
     <hr>
     <h5>Cash: $<span id="playercash">{{ player.cash }}</span></h5>
@@ -145,6 +150,17 @@
     {% endfor %}
 
     <a href="/market" class="btn btn-lg btn-info">Buy Stocks</a>
+    {% else %}
+    <div id="container" align="center">
+      <br><br>
+      <h1><b>The event is about to start! The countdown has begun!<b></h1><br>
+      {% include "core/includes/landingtimer.html" %}
+      <br><br>
+      <div align="left">
+      {% include "core/includes/rules.html" %}
+      </div>
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}
