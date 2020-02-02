@@ -24,7 +24,6 @@
         <div class="content">
             <img class="freemex-logo" src="{% static "img/logo.png" %}"/>
             <p class="nasdaq-intro">NASDAQ Timings: 7PM - 1:30AM IST</p>
-            {% if settings.EVENT_STARTED %}
               <div class="login-buttons">
                   <!-- <p><a class="btn cyan darken-2" href="#" data-toggle="modal" data-target="#modalLRForm" role="button"><i class="fa fa-sign-in"></i> Login/Register</a></p> -->
                   <a class="btn btn-fb" href="{% url 'social:begin' 'facebook' %}" role="button">
@@ -34,9 +33,6 @@
                       <i class="fa fa-google-plus left"></i> Google+
                   </a>
               </div>
-            {% else %}
-              <h1 class="white-text">Freemex has not started yet. Stay tuned!</h1>
-            {% endif %}
         </div>
     </header>
 

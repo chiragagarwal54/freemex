@@ -6,6 +6,27 @@ from . import views
 
 # If the event has ended disable other pages and only show leaderboard with a
 # message saying event has ended
+if not settings.EVENT_STARTED:
+    urlpatterns = [
+        # Home Page
+        url(r'^$', views.index, name='index'),
+
+        # User login
+        url(r'^login/$', views.loginUser, name='login'),
+
+        # Change username
+        url(
+            r'^change_username/$', views.changeUsername, name='change_username'
+        ),
+
+        # Leaderboard api
+        url(
+            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+        ),
+
+        # Logout url
+        path('logout/', views.logout_view, name="logout"),
+    ]
 if settings.EVENT_ENDED:
     urlpatterns = [
         # Handle end event view
@@ -15,14 +36,6 @@ if settings.EVENT_ENDED:
         url(
             r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
         ),
-    ]
-elif not settings.EVENT_STARTED:
-    urlpatterns = [
-        # Handle end event view
-        url(r'^$', views.index, name='index_before_event'),
-
-        # Stock price JSON data
-        url(r'view/stockprice/$', views.stockPrices, name='stock_price'),
     ]
 else:
     urlpatterns = [
