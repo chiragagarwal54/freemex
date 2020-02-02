@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from django.contrib.auth.views import logout
+from django.urls import path
 from django.conf import settings
 
 from . import views
@@ -73,7 +73,7 @@ else:
         url('', include('social_django.urls', namespace='social')),
 
         # Logout url
-        url(r'^logout/$', logout, {'next_page': '/'}),
+        path('logout/', views.logout_view, name="logout"),
 
         # transactions
         url(r'^transactions/$', views.transactions, name='transactions'),

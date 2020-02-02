@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% load tz %}
+{% load mathfilters %}
 
 {% block content %}
 {% include "core/includes/navbar.html" with current="Home" %}
@@ -66,14 +67,14 @@
             <div class="market-info">
                 {% if player_stock.stock.diff >= 0 %}
                 <p class="card-text stock-info up" id="diff">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-up" aria-hidden="true">{{player_stock.stock.diff}}</i>
                 </p>
                 {% else %}
                 <p class="card-text stock-info down" id="diff">
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-down" aria-hidden="true">{{player_stock.stock.diff|mul:-1}}</i>
                 </p>
                 {% endif %}
-                <p class="card-text stock-info">Price: <span id="price"></span></p>
+                <p class="card-text stock-info">Price: <span id="price">{{player_stock.stock.price}}</span></p>
                 <p class="card-text stock-info">{{ player_stock.stock.code }}</p>
                 <p class="card-text stock-info">x{{ player_stock.quantity }}</p>
                 <!--<p class="card-text stock-info">Invested : ${{ player_stock.invested }}</p>-->

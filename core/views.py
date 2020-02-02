@@ -1,9 +1,9 @@
 import json
 
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.cache import cache_page
@@ -35,7 +35,7 @@ def index(request):
 
         return render(request, 'core/leaderboard.html', context)
 
-    if settings.EVENT_STARTED and request.user.is_authenticated():
+    if settings.EVENT_STARTED and request.user.is_authenticated:
         playerObj = Player.objects.get(user=request.user)
         playerStocks = PlayerStock.objects.filter(player=playerObj)
 
@@ -57,7 +57,7 @@ def registerUser(request):
     response_data['code'] = 1
     response_data['message'] = 'Some Error Occurred'
 
-    if request.method == "POST":
+    if request.POST:
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -83,9 +83,9 @@ def loginUser(request):
     response_data['code'] = 1
     response_data['message'] = 'Some Error Occurred'
 
-    if request.method == "POST":
-        username = request.POST.get('username')
-        raw_password = request.POST.get('password')
+    if request.POST:
+        username = request.POST['username']
+        raw_password = request.POST['password']
         user = authenticate(username=username, password=raw_password)
         if user is not None:
             login(request, user)
@@ -97,6 +97,12 @@ def loginUser(request):
 
     return HttpResponse(json.dumps(response_data),
                         content_type="application/json")
+
+# User logout
+
+def logout_view(request):
+    logout(request)
+    return redirect("index")
 
 
 # Get all the player usernames for username validation
@@ -155,7 +161,7 @@ def changeUsername(request):
 
 def stockPrices(request):
     response_data = {}
-    if request.method == "GET":
+    if request.GET:
         stockObjects = Stock.objects.all()
         for stock in stockObjects:
             response_data[stock.name] = {
@@ -286,7 +292,7 @@ def buyStock(request):
                 log.isBought = True
                 log.change = 0
                 log.save()
-                
+
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
@@ -332,7 +338,7 @@ def sellStock(request):
            requestedStockCount <= playerStockList[0].quantity):
             try:
 
-            	
+
 
                 # Update player to stock table
                 playerStock = playerStockList[0]
@@ -350,7 +356,7 @@ def sellStock(request):
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
                 playerObj.save()
-                
+
                 # add transaction to log
                 log = Log()
                 log.player = playerObj
@@ -361,7 +367,7 @@ def sellStock(request):
                 log.change =   playerStock.invested  +            stockPrice * requestedStockCount  - initial_investment
                 # change   =   market value of remaining stocks + amount at which the stock is sold -cost of all stocks -
                 log.save()
-                
+
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
@@ -398,7 +404,7 @@ def engage(request):
 def transactions(request):
 
     context = {}
-    
+
     playerObj = Player.objects.get(user=request.user)
     logs = Log.objects.filter(player=playerObj)
     logs = sorted(logs, key=lambda a: a.logtime, reverse=True)
@@ -408,4 +414,3 @@ def transactions(request):
 
 
     return render(request, 'core/transactions.html', context)
-

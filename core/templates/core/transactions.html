@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% load tz %}
+{% load mathfilters %}
 
 {% block content %}
 
@@ -15,7 +16,7 @@
     <br>
     <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
     <br><br>
-    
+
     <table class="table transactions-sheet" >
     	<thead>
     		<tr>
@@ -45,7 +46,7 @@
 	            	{% if log.change >= 0 %}
 	          	      <font class="text-success">${{ log.change }}</font>
 	                {% elif log.change < 0 %}
-	                  <font class="text-danger">${{ log.change }}</font>
+	                  <font class="text-danger">${{ log.change|mul:-1 }}</font>
 	                {% endif %}
 	            </td>
 		</tr>
@@ -54,7 +55,7 @@
     </table>
 
 
-    
+
 
 </div>
 

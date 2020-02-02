@@ -7,3 +7,7 @@ wsgi/static/
 __pycache__
 db.sqlite3-journal
 .DS_Store
+freemex/
+bin/
+include/
+lib/
