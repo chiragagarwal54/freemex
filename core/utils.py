@@ -23,14 +23,9 @@ def fetch_quotes(symbol):
         return None
 
     data = response.json()
-    if data:
-        quotes['price'] = data['Global Quote']['05. price']
-        quotes['diff'] = data['Global Quote']['09. change']
-    else:
-
-    # quotes['price'] = 35
-    # quotes['diff'] = 24
-
+    quotes['price'] = data['Global Quote']['05. price']
+    quotes['diff'] = data['Global Quote']['09. change']
+    
     return quotes
 
 
