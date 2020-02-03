@@ -11,23 +11,58 @@ if not settings.EVENT_STARTED:
         # Home Page
         url(r'^$', views.index, name='index'),
 
+        url(r'^index2/$', views.index2, name='index2'),
+
+        # New user registration
+        url(r'^register/$', views.registerUser, name='register'),
+
         # User login
         url(r'^login/$', views.loginUser, name='login'),
+
+        # Username JSON data
+        url(r'get_users/$', views.getUsers, name='get_users'),
 
         # Change username
         url(
             r'^change_username/$', views.changeUsername, name='change_username'
         ),
 
+        # Stock price JSON data
+        url(r'view/stockprice/$', views.stockPrices, name='stock_price'),
+
+        # Market watch
+        url(r'^market/$', views.market, name='market'),
+
+        # Leaderboard
+        url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+
         # Leaderboard api
         url(
             r'^api/scoreboard/$', views.leaderboardApi, name='leaderboard_api'
         ),
 
+        # Buy stock
+        url(r'^buystock/$', views.buyStock, name='buy_stock'),
+
+        # Sell stock
+        url(r'^sellstock/$', views.sellStock, name='sell_stock'),
+
+        # Rules
+        url(r'^rules/$', views.rules, name='rules'),
+
+        # Engage
+        url(r'^engage/$', views.engage, name='engage'),
+
+        # social login urls
+        url('', include('social_django.urls', namespace='social')),
+
         # Logout url
         path('logout/', views.logout_view, name="logout"),
+
+        # transactions
+        url(r'^transactions/$', views.transactions, name='transactions'),
     ]
-if settings.EVENT_ENDED:
+elif settings.EVENT_ENDED:
     urlpatterns = [
         # Handle end event view
         url(r'^$', views.index, name='index_after_event'),
@@ -67,7 +102,7 @@ else:
 
         # Leaderboard api
         url(
-            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+            r'^api/scoreboard/$', views.leaderboardApi, name='leaderboard_api'
         ),
 
         # Buy stock

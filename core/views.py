@@ -47,6 +47,34 @@ def index(request):
     return render(request, 'core/landing.html', context)
 
 
+def index2(request):
+
+    context = {}
+
+    if settings.EVENT_ENDED:
+
+        players = map(lambda x: x.player, User.objects.filter(is_staff=False))
+        players = sorted(players, key=lambda a: a.total_value(), reverse=True)
+
+        context['message'] = {
+            'first': "The event has ended... Thanks for participating. ",
+            'second': "Congralutions to the winners and here is the leaderboard..."  # noqa
+        }
+        context['players'] = players
+
+        return render(request, 'core/leaderboard.html', context)
+
+    if request.user.is_authenticated:
+        playerObj = Player.objects.get(user=request.user)
+        playerStocks = PlayerStock.objects.filter(player=playerObj)
+
+        context['player'] = playerObj
+        context['player_stocks'] = playerStocks
+
+        return render(request, 'core/portfolio2.html', context)
+
+    return render(request, 'core/landing.html', context)
+
 # Register the user from the registration page
 
 def registerUser(request):
