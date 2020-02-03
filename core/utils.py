@@ -16,7 +16,6 @@ def fetch_quotes(symbol):
 
     try:
         response = requests.get(link)
-        print("RES:::: ", repr(response))
     except:
         return None
 
@@ -24,12 +23,11 @@ def fetch_quotes(symbol):
         return None
 
     data = response.json()
-    print("data:::: ", repr(data))
     if data:
         quotes['price'] = data['Global Quote']['05. price']
         quotes['diff'] = data['Global Quote']['09. change']
     else:
-        print("NO DATA")
+
     # quotes['price'] = 35
     # quotes['diff'] = 24
 
@@ -41,12 +39,14 @@ def update_all_stock_prices():
     all_stocks = Stock.objects.all()
     #symbol_list = [s.code for s in all_stocks]
     for stock in all_stocks:
-        quotes = fetch_quotes(stock.code)
-        stock.price = quotes['price']
-        stock.diff = quotes['diff']
-        stock.last_updated = timezone.now()
+        try:
+            quotes = fetch_quotes(stock.code)
+            stock.price = quotes['price']
+            stock.diff = quotes['diff']
+            stock.last_updated = timezone.now()
+        except:
+            stock.last_updated = timezone.now()
         stock.save()
-
 
 @transaction.atomic
 def update_all_player_assets():
