@@ -69,7 +69,7 @@ elif settings.EVENT_ENDED:
 
         # Leaderboard api
         url(
-            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+            r'^api/scoreboard/$', views.leaderboardApi, name='leaderboard_api'
         ),
     ]
 else:

@@ -16,6 +16,7 @@ def fetch_quotes(symbol):
 
     try:
         response = requests.get(link)
+        print("RES:::: ", repr(response))
     except:
         return None
 
@@ -23,8 +24,12 @@ def fetch_quotes(symbol):
         return None
 
     data = response.json()
-    quotes['price'] = data['Global Quote']['05. price']
-    quotes['diff'] = data['Global Quote']['09. change']
+    print("data:::: ", repr(data))
+    if data:
+        quotes['price'] = data['Global Quote']['05. price']
+        quotes['diff'] = data['Global Quote']['09. change']
+    else:
+        print("NO DATA")
     # quotes['price'] = 35
     # quotes['diff'] = 24
 
