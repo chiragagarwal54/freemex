@@ -1,5 +1,5 @@
 // Initialise the time variable after which stock prices are updated
-time = 60*1000 - 100;
+time = (60*1000 - 100)*2;
 
 // Initialise the empty users array
 users = [];
@@ -43,7 +43,7 @@ function updateStockPrices() {
             $('#last-updated').html(current_time);
         }
     });
-    setTimeout(updateStockPrices, 60*1000 - time);
+    setTimeout(updateStockPrices, 30000);
 }
 
 // Ajax call to get the usernames of all the players
