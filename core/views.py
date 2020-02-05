@@ -247,7 +247,7 @@ def leaderboardApi(request):
         for player in players:
             response_data.append({
                 "name": player.username,
-                "rank": player.player.total_value(),
+                "value": player.player.total_value(),
                 "email": player.email
             })
 
